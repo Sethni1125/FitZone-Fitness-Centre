@@ -1,0 +1,620 @@
+<html data-theme="light">
+<head>
+    <title>FitZone Blog - Fitness Tips & News</title>
+    <link rel="stylesheet" href="../css/Home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .blog-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .blog-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .blog-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color, #4A90E2);
+        }
+        
+        .blog-header p {
+            font-size: 1.1rem;
+            color: var(--text-color, #555);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        [data-theme="dark"] .blog-header p {
+            color: #f0f0f0;
+        }
+        
+        .blog-filter {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .filter-btn {
+            padding: 8px 16px;
+            border: 2px solid var(--primary-color, #4A90E2);
+            background: transparent;
+            color: var(--primary-color, #4A90E2);
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--primary-color, #4A90E2);
+            color: white;
+        }
+        
+        [data-theme="dark"] .filter-btn {
+            border-color: #5A9AF2;
+            color: #5A9AF2;
+        }
+        
+        [data-theme="dark"] .filter-btn:hover, 
+        [data-theme="dark"] .filter-btn.active {
+            background-color: #5A9AF2;
+            color: #222;
+        }
+        
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .blog-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: white;
+        }
+        
+        [data-theme="dark"] .blog-card {
+            background-color: #2a2a2a;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .blog-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .blog-content {
+            padding: 20px;
+        }
+        
+        .blog-tag {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: var(--primary-color, #4A90E2);
+            color: white;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+        
+        [data-theme="dark"] .blog-tag {
+            background-color: #5A9AF2;
+            color: #222;
+        }
+        
+        .blog-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--text-color, #333);
+        }
+        
+        [data-theme="dark"] .blog-title {
+            color: #f0f0f0;
+        }
+        
+        .blog-excerpt {
+            color: var(--text-color-light, #666);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        [data-theme="dark"] .blog-excerpt {
+            color: #ccc;
+        }
+        
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--text-color-light, #777);
+        }
+        
+        [data-theme="dark"] .blog-meta {
+            color: #aaa;
+        }
+        
+        .blog-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+            object-fit: cover;
+        }
+        
+        .read-more {
+            color: var(--primary-color, #4A90E2);
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .read-more:hover {
+            text-decoration: underline;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            gap: 10px;
+        }
+        
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            background-color: white;
+            color: var(--text-color, #555);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        [data-theme="dark"] .page-btn {
+            background-color: #2a2a2a;
+            border-color: #444;
+            color: #f0f0f0;
+        }
+        
+        .page-btn:hover, .page-btn.active {
+            background-color: var(--primary-color, #4A90E2);
+            color: white;
+            border-color: var(--primary-color, #4A90E2);
+        }
+        
+        [data-theme="dark"] .page-btn:hover, 
+        [data-theme="dark"] .page-btn.active {
+            background-color: #5A9AF2;
+            color: #222;
+            border-color: #5A9AF2;
+        }
+        
+        .newsletter {
+            background-color: #f9f9f9;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        [data-theme="dark"] .newsletter {
+            background-color: #333;
+        }
+        
+        .newsletter h3 {
+            margin-bottom: 15px;
+            color: var(--text-color, #333);
+        }
+        
+        [data-theme="dark"] .newsletter h3 {
+            color: #f0f0f0;
+        }
+        
+        .newsletter p {
+            margin-bottom: 20px;
+            color: var(--text-color-light, #666);
+        }
+        
+        [data-theme="dark"] .newsletter p {
+            color: #ccc;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px 0 0 5px;
+            font-size: 1rem;
+        }
+        
+        [data-theme="dark"] .newsletter-input {
+            background-color: #444;
+            border-color: #555;
+            color: #f0f0f0;
+        }
+        
+        .newsletter-btn {
+            padding: 12px 25px;
+            background-color: var(--primary-color, #4A90E2);
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        
+        .newsletter-btn:hover {
+            background-color: #3a80d2;
+        }
+        
+        [data-theme="dark"] .newsletter-btn:hover {
+            background-color: #4a8ad2;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="theme-toggle" id="themeToggle">
+        <svg id="moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z"/>
+        </svg>
+        <svg id="sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M12,17c-2.76,0-5-2.24-5-5s2.24-5,5-5s5,2.24,5,5S14.76,17,12,17z M12,9c-1.65,0-3,1.35-3,3s1.35,3,3,3s3-1.35,3-3S13.65,9,12,9z"/>
+            <path d="M12,3c-0.55,0-1,0.45-1,1v2c0,0.55,0.45,1,1,1s1-0.45,1-1V4C13,3.45,12.55,3,12,3z"/>
+            <path d="M12,21c-0.55,0-1,0.45-1,1v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2C13,21.45,12.55,21,12,21z"/>
+            <path d="M4.93,5.93c-0.39,0.39-0.39,1.02,0,1.41l1.42,1.42c0.39,0.39,1.02,0.39,1.41,0s0.39-1.02,0-1.41L6.34,5.93C5.95,5.54,5.32,5.54,4.93,5.93z"/>
+            <path d="M18.36,17.36c-0.39,0.39-0.39,1.02,0,1.41l1.42,1.42c0.39,0.39,1.02,0.39,1.41,0s0.39-1.02,0-1.41l-1.42-1.42C19.38,16.97,18.75,16.97,18.36,17.36z"/>
+            <path d="M3,12c0-0.55,0.45-1,1-1h2c0.55,0,1,0.45,1,1s-0.45,1-1,1H4C3.45,13,3,12.55,3,12z"/>
+            <path d="M21,12c0-0.55-0.45-1-1-1h-2c-0.55,0-1,0.45-1,1s0.45,1,1,1h2C20.55,13,21,12.55,21,12z"/>
+            <path d="M4.93,18.07c0.39-0.39,0.39-1.02,0-1.41l-1.42-1.42c-0.39-0.39-1.02-0.39-1.41,0s-0.39,1.02,0,1.41l1.42,1.42C3.91,18.46,4.54,18.46,4.93,18.07z"/>
+            <path d="M19.07,5.93c-0.39-0.39-1.02-0.39-1.41,0l-1.42,1.42c-0.39,0.39-0.39,1.02,0,1.41s1.02,0.39,1.41,0l1.42-1.42C19.46,6.95,19.46,6.32,19.07,5.93z"/>
+        </svg>
+    </div>
+
+    <div id="logoutModal" class="modal">
+        <div class="modal-content tilt-effect">
+            <h3>Do you really want to log out?</h3>
+            <div class="modal-buttons">
+                <button id="logoutYes" class="modal-btn btn-yes">Yes</button>
+                <button id="logoutNo" class="modal-btn btn-no">No</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="customAlert" style="display: none;" class="alert-overlay">
+        <div class="custom-alert tilt-effect">
+            <div class="alert-icon"><i class="fas fa-check-circle"></i></div>
+            <h3>Success!</h3>
+            <p>You have been successfully logged out.</p>
+            <button id="alertOk" class="alert-button">OK</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <h1 class="title">
+                FitZone Blog
+                <div class="aurora">
+                    <div class="aurora_item"></div>
+                    <div class="aurora_item"></div>
+                    <div class="aurora_item"></div>
+                    <div class="aurora_item"></div>
+                </div>
+            </h1>
+        </div>
+        
+        <div class="mockup">
+            <div class="mockup-header">
+                <div class="logo">FitZone</div>
+                <div class="nav">
+                    <a href="../front-end/Home.html" class="nav-item">Home</a>
+                    <a href="../front-end/About Us.html" class="nav-item">About</a>
+                    <a href="../front-end/Class.php" class="nav-item">Classes</a>
+                    <a href="../front-end/Membership.html" class="nav-item">Membership</a>
+                    <a href="../front-end/Contact Us.html" class="nav-item">Contact Us</a>
+                    <a href="../front-end/Blog.html" class="nav-item active">Blog</a>
+                    <a href="../front-end/l.php" class="btn">Sign In</a>
+                </div>
+            </div>
+            
+            <div class="blog-container">
+                <div class="blog-header">
+                    <h1>Fitness Tips & Wellness Insights</h1>
+                    <p>Discover the latest fitness trends, workout tips, nutrition advice, and wellness strategies to help you achieve your health goals.</p>
+                </div>
+                
+                <div class="blog-filter">
+                    <button class="filter-btn active">All</button>
+                    <button class="filter-btn">Workouts</button>
+                    <button class="filter-btn">Nutrition</button>
+                    <button class="filter-btn">Wellness</button>
+                    <button class="filter-btn">Success Stories</button>
+                    <button class="filter-btn">Equipment</button>
+                </div>
+                
+                <div class="blog-grid">
+                    <div class="blog-card">
+                        <img src="../img/blog1.jpg" alt="HIIT Benefits" class="blog-img">
+                        <div class="blog-content">
+                            <span class="blog-tag">Workouts</span>
+                            <h3 class="blog-title">5 Science-Backed Benefits of HIIT Workouts</h3>
+                            <p class="blog-excerpt">Discover why high-intensity interval training has become one of the most popular and effective workout methods for burning fat and improving cardiovascular health.</p>
+                            <div class="blog-meta">
+                                <div class="blog-author">
+                                    <img src="../img/trainer1.jpeg" alt="Author" class="author-img">
+                                    <span>Sarah Johnson</span>
+                                </div>
+                                <span>April 12, 2025</span>
+                            </div>
+                            <a href="#" class="read-more">Read More →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="blog-card">
+                        <img src="../img/blog2.jpg" alt="Protein Foods" class="blog-img">
+                        <div class="blog-content">
+                            <span class="blog-tag">Nutrition</span>
+                            <h3 class="blog-title">Top 10 Plant-Based Protein Sources for Vegans</h3>
+                            <p class="blog-excerpt">Meeting your protein needs on a plant-based diet is easier than you think. These complete protein sources will help you build and maintain muscle mass.</p>
+                            <div class="blog-meta">
+                                <div class="blog-author">
+                                    <img src="../img/trainer2.jpeg" alt="Author" class="author-img">
+                                    <span>Michael Chen</span>
+                                </div>
+                                <span>April 10, 2025</span>
+                            </div>
+                            <a href="#" class="read-more">Read More →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="blog-card">
+                        <img src="../img/blog4.jpg" alt="Mindfulness" class="blog-img">
+                        <div class="blog-content">
+                            <span class="blog-tag">Wellness</span>
+                            <h3 class="blog-title">How Mindfulness Meditation Can Enhance Your Workouts</h3>
+                            <p class="blog-excerpt">Learn how incorporating mindfulness practices into your fitness routine can improve performance, reduce injury risk, and enhance overall results.</p>
+                            <div class="blog-meta">
+                                <div class="blog-author">
+                                    <img src="../img/trainer3.jpeg" alt="Author" class="author-img">
+                                    <span>Lisa Patel</span>
+                                </div>
+                                <span>April 8, 2025</span>
+                            </div>
+                            <a href="#" class="read-more">Read More →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="blog-card">
+                        <img src="../img/blog3.jpg" alt="Weight Loss Journey" class="blog-img">
+                        <div class="blog-content">
+                            <span class="blog-tag">Success Stories</span>
+                            <h3 class="blog-title">From Couch to Marathon: James's 18-Month Transformation</h3>
+                            <p class="blog-excerpt">Read the inspiring story of how FitZone member James went from sedentary lifestyle to completing his first marathon with consistent training and support.</p>
+                            <div class="blog-meta">
+                                <div class="blog-author">
+                                    <img src="../img/trainer4.jpeg" alt="Author" class="author-img">
+                                    <span>James Wilson</span>
+                                </div>
+                                <span>April 5, 2025</span>
+                            </div>
+                            <a href="#" class="read-more">Read More →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="blog-card">
+                        <img src="../img/blog5.jpg" alt="Home Equipment" class="blog-img">
+                        <div class="blog-content">
+                            <span class="blog-tag">Equipment</span>
+                            <h3 class="blog-title">Essential Home Gym Equipment for Limited Space</h3>
+                            <p class="blog-excerpt">Working out at home doesn't require a lot of space or expensive equipment. Here's what you need for effective workouts in small spaces.</p>
+                            <div class="blog-meta">
+                                <div class="blog-author">
+                                    <img src="../img/trainer5.jpeg" alt="Author" class="author-img">
+                                    <span>Emma Rodriguez</span>
+                                </div>
+                                <span>April 3, 2025</span>
+                            </div>
+                            <a href="#" class="read-more">Read More →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="blog-card">
+                        <img src="../img/blog6.jpg" alt="Meal Prep" class="blog-img">
+                        <div class="blog-content">
+                            <span class="blog-tag">Nutrition</span>
+                            <h3 class="blog-title">Meal Prep 101: A Beginner's Guide to Healthy Eating</h3>
+                            <p class="blog-excerpt">Learn how to save time, money, and stick to your nutrition goals with these simple meal preparation strategies and delicious recipes.</p>
+                            <div class="blog-meta">
+                                <div class="blog-author">
+                                    <img src="../img/trainer6.jpeg" alt="Author" class="author-img">
+                                    <span>Carlos Mendez</span>
+                                </div>
+                                <span>April 1, 2025</span>
+                            </div>
+                            <a href="#" class="read-more">Read More →</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="pagination">
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn"><i class="fas fa-ellipsis-h"></i></button>
+                    <button class="page-btn">10</button>
+                    <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                
+                <div class="newsletter">
+                    <h3>Subscribe to Our Newsletter</h3>
+                    <p>Get the latest fitness tips, workout ideas, and wellness advice delivered straight to your inbox.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email address" class="newsletter-input" required>
+                        <button type="submit" class="newsletter-btn">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>FitZone</h4>
+                <p>Transform your body, transform your life with our state-of-the-art fitness center and expert trainers.</p>
+                <div class="social-links">
+                    <a href=" "><i class="fab fa-youtube"></i></a>
+                    <a href=" "><i class="fab fa-instagram"></i></a>
+                    <a href=" "><i class="fab fa-facebook-f"></i></a>
+                    <a href=" "><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="../front-end/Home.html">Home</a></li>
+                    <li><a href="../front-end/About Us.html">About Us</a></li>
+                    <li><a href="../front-end/Class.php">Classes</a></li>
+                    <li><a href="../front-end/Membership.html">Membership</a></li>
+                    <li><a href="../front-end/Contact Us.html">Contact Us</a></li>
+                    <li><a href="../front-end/Blog.html">Blog</a></li>
+                    <a href="../front-end/l.php" class="nav-item btn">Sign In</a>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Our Hours</h4>
+                <ul>
+                    <li>Monday - Friday: 5:00 AM - 11:00 PM</li>
+                    <li>Saturday: 6:00 AM - 10:00 PM</li>
+                    <li>Sunday: 7:00 AM - 9:00 PM</li>
+                    <li>Holidays: 8:00 AM - 8:00 PM</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Info</h4>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Fitness Avenue, Healthville</li>
+                    <li><i class="fas fa-phone"></i> (555) 123-4567</li>
+                    <li><i class="fas fa-envelope"></i> info@fitzonefit.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 FitZone Fitness Center. All rights reserved.</p>
+        </div>
+    </footer>
+
+
+    
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlElement = document.documentElement;
+        
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            htmlElement.setAttribute('data-theme', savedTheme);
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+        
+        const logoutBtn = document.getElementById('logoutBtn');
+        const logoutModal = document.getElementById('logoutModal');
+        const logoutYes = document.getElementById('logoutYes');
+        const logoutNo = document.getElementById('logoutNo');
+        
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            logoutModal.style.display = 'flex';
+        });
+        
+        logoutNo.addEventListener('click', () => {
+            logoutModal.style.display = 'none';
+        });
+        
+        logoutYes.addEventListener('click', () => {
+            alert("You have been successfully logged out !");
+            window.location.href = '../front-end/l.php';
+        });
+        
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                const category = button.textContent;
+                const blogGrid = document.querySelector('.blog-grid');
+                blogGrid.style.opacity = '0.5';
+                setTimeout(() => {
+                    blogGrid.style.opacity = '1';
+                }, 300);
+            });
+        });
+        
+        const pageButtons = document.querySelectorAll('.page-btn');
+        
+        pageButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                pageButtons.forEach(btn => btn.classList.remove('active'));
+                if (!button.querySelector('.fas')) {
+                    button.classList.add('active');
+                }
+                const blogGrid = document.querySelector('.blog-grid');
+                blogGrid.style.opacity = '0.5';
+                setTimeout(() => {
+                    blogGrid.style.opacity = '1';
+                }, 300);
+            });
+        });
+        
+        const newsletterForm = document.querySelector('.newsletter-form');
+        
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const emailInput = document.querySelector('.newsletter-input');
+            const email = emailInput.value;
+            if (email) {
+                alert('Thank you for subscribing to our newsletter!');
+                emailInput.value = '';
+            }
+        });
+    </script>
+</body>
+</html>
+        

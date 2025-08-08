@@ -1,0 +1,689 @@
+-<html data-theme="light">
+<head>
+    <title>FitZone Fitness Center</title>
+    <link rel="stylesheet" href="../css/Home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Chatbot Styles */
+        .chatbot-toggle {
+          position: fixed;
+          bottom: 30px;
+          right: 30px;
+          width: 60px;
+          height: 60px;
+          background-color: var(--primary-color, #4A90E2);
+          color: white;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          transition: all 0.3s ease;
+          z-index: 999;
+        }
+      
+        .chatbot-toggle:hover {
+          transform: scale(1.1);
+        }
+      
+        .chatbot-toggle i {
+          font-size: 24px;
+        }
+      
+        .chatbot-container {
+          position: fixed;
+          bottom: 100px;
+          right: 30px;
+          width: 350px;
+          height: 500px;
+          background-color: white;
+          border-radius: 15px;
+          box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
+          z-index: 1000;
+          display: none;
+        }
+      
+        [data-theme="dark"] .chatbot-container {
+          background-color: #2a2a2a;
+          color: #f0f0f0;
+          border: 1px solid #444;
+        }
+      
+        .chatbot-header {
+          padding: 15px;
+          background-color: var(--primary-color, #4A90E2);
+          color: white;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+      
+        .chatbot-header h3 {
+          margin: 0;
+          font-size: 18px;
+        }
+      
+        .close-btn {
+          background: none;
+          border: none;
+          color: white;
+          cursor: pointer;
+          font-size: 18px;
+        }
+      
+        .chatbot-messages {
+          flex-grow: 1;
+          padding: 15px;
+          overflow-y: auto;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+      
+        .bot-message, .user-message {
+          max-width: 80%;
+          padding: 10px 15px;
+          border-radius: 15px;
+          margin-bottom: 5px;
+        }
+      
+        .bot-message {
+          align-self: flex-start;
+          background-color: #f0f0f0;
+          color: #333;
+        }
+      
+        [data-theme="dark"] .bot-message {
+          background-color: #444;
+          color: #f0f0f0;
+        }
+      
+        .user-message {
+          align-self: flex-end;
+          background-color: var(--primary-color, #4A90E2);
+          color: white;
+        }
+      
+        .chatbot-input {
+          display: flex;
+          padding: 10px;
+          border-top: 1px solid #eee;
+        }
+      
+        [data-theme="dark"] .chatbot-input {
+          border-top: 1px solid #444;
+        }
+      
+        #user-input {
+          flex-grow: 1;
+          padding: 10px;
+          border: 1px solid #ddd;
+          border-radius: 20px;
+          margin-right: 10px;
+          outline: none;
+        }
+      
+        [data-theme="dark"] #user-input {
+          background-color: #333;
+          color: #f0f0f0;
+          border: 1px solid #555;
+        }
+      
+        #send-message {
+          background-color: var(--primary-color, #4A90E2);
+          color: white;
+          border: none;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          cursor: pointer;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      
+        /* BMI Calculator Styles */
+        .bmi-calculator {
+          background-color: #f9f9f9;
+          padding: 15px;
+          border-radius: 10px;
+          margin: 10px;
+        }
+      
+        [data-theme="dark"] .bmi-calculator {
+          background-color: #333;
+        }
+      
+        .bmi-calculator h4 {
+          margin-top: 0;
+          text-align: center;
+          margin-bottom: 15px;
+        }
+      
+        .input-group {
+          margin-bottom: 15px;
+        }
+      
+        .input-group label {
+          display: block;
+          margin-bottom: 5px;
+          font-weight: 500;
+        }
+      
+        .input-group input {
+          width: 100%;
+          padding: 8px;
+          border: 1px solid #ddd;
+          border-radius: 5px;
+        }
+      
+        [data-theme="dark"] .input-group input {
+          background-color: #444;
+          color: #f0f0f0;
+          border: 1px solid #555;
+        }
+      
+        .calculate-btn {
+          width: 100%;
+          padding: 10px;
+          background-color: var(--primary-color, #4A90E2);
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          font-weight: bold;
+        }
+      
+        .calculate-btn:hover {
+          background-color: #3a80d2;
+        }
+      
+        .bmi-result {
+          margin-top: 15px;
+          padding: 10px;
+          border-radius: 5px;
+          text-align: center;
+          font-weight: 500;
+        }
+      
+        /* Result colors */
+        .underweight {
+          background-color: #AED6F1;
+          color: #2874A6;
+        }
+      
+        .normal {
+          background-color: #A9DFBF;
+          color: #196F3D;
+        }
+      
+        .overweight {
+          background-color: #F9E79F;
+          color: #B7950B;
+        }
+      
+        .obese {
+          background-color: #F5B7B1;
+          color: #B03A2E;
+        }
+      
+        [data-theme="dark"] .underweight,
+        [data-theme="dark"] .normal,
+        [data-theme="dark"] .overweight,
+        [data-theme="dark"] .obese {
+          color: #222;
+        }
+      </style>
+
+  </head>
+<body>
+    <div class="theme-toggle" id="themeToggle">
+        <svg id="moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z"/>
+        </svg>
+        <svg id="sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M12,17c-2.76,0-5-2.24-5-5s2.24-5,5-5s5,2.24,5,5S14.76,17,12,17z M12,9c-1.65,0-3,1.35-3,3s1.35,3,3,3s3-1.35,3-3S13.65,9,12,9z"/>
+            <path d="M12,3c-0.55,0-1,0.45-1,1v2c0,0.55,0.45,1,1,1s1-0.45,1-1V4C13,3.45,12.55,3,12,3z"/>
+            <path d="M12,21c-0.55,0-1,0.45-1,1v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2C13,21.45,12.55,21,12,21z"/>
+            <path d="M4.93,5.93c-0.39,0.39-0.39,1.02,0,1.41l1.42,1.42c0.39,0.39,1.02,0.39,1.41,0s0.39-1.02,0-1.41L6.34,5.93C5.95,5.54,5.32,5.54,4.93,5.93z"/>
+            <path d="M18.36,17.36c-0.39,0.39-0.39,1.02,0,1.41l1.42,1.42c0.39,0.39,1.02,0.39,1.41,0s0.39-1.02,0-1.41l-1.42-1.42C19.38,16.97,18.75,16.97,18.36,17.36z"/>
+            <path d="M3,12c0-0.55,0.45-1,1-1h2c0.55,0,1,0.45,1,1s-0.45,1-1,1H4C3.45,13,3,12.55,3,12z"/>
+            <path d="M21,12c0-0.55-0.45-1-1-1h-2c-0.55,0-1,0.45-1,1s0.45,1,1,1h2C20.55,13,21,12.55,21,12z"/>
+            <path d="M4.93,18.07c0.39-0.39,0.39-1.02,0-1.41l-1.42-1.42c-0.39-0.39-1.02-0.39-1.41,0s-0.39,1.02,0,1.41l1.42,1.42C3.91,18.46,4.54,18.46,4.93,18.07z"/>
+            <path d="M19.07,5.93c-0.39-0.39-1.02-0.39-1.41,0l-1.42,1.42c-0.39,0.39-0.39,1.02,0,1.41s1.02,0.39,1.41,0l1.42-1.42C19.46,6.95,19.46,6.32,19.07,5.93z"/>
+        </svg>
+    </div>
+
+    <div id="logoutModal" class="modal">
+        <div class="modal-content tilt-effect">
+            <h3>Do you really want to log out?</h3>
+            <div class="modal-buttons">
+                <button id="logoutYes" class="modal-btn btn-yes">Yes</button>
+                <button id="logoutNo" class="modal-btn btn-no">No</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="customAlert" style="display: none;" class="alert-overlay">
+        <div class="custom-alert tilt-effect">
+            <div class="alert-icon"><i class="fas fa-check-circle"></i></div>
+            <h3>Success!</h3>
+            <p>You have been successfully logged out.</p>
+            <button id="alertOk" class="alert-button">OK</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <h1 class="title">
+                FitZone Fitness Center
+                <div class="aurora">
+                    <div class="aurora_item"></div>
+                    <div class="aurora_item"></div>
+                    <div class="aurora_item"></div>
+                    <div class="aurora_item"></div>
+                </div>
+            </h1>
+        </div>
+        
+        <h2>Home</h2>
+        <div class="mockup">
+            <div class="mockup-header">
+                <div class="logo">FitZone</div>
+                <div class="nav">
+                  <a href="../front-end/Home.html" class="nav-item active">Home</a>
+                  <a href="../front-end/About Us.html" class="nav-item">About</a>
+                  <a href="../front-end/Class.php" class="nav-item">Classes</a>
+                  <a href="../front-end/Membership.html" class="nav-item">Membership</a>
+                  <a href="../front-end/Contact Us.html" class="nav-item">Contact Us</a>
+                  <a href="../front-end/Blog.html" class="nav-item">Blog</a>
+                  <a href="../front-end/l.php" class="btn">Sign In</a>
+                  <a href="../front-end/l.php" id="logoutBtn" class="nav-item btn btn-secondary">Log Out</a>
+                </div>
+            </div>
+            
+            <div class="hero">
+                <h2>Transform Your Body, Transform Your Life</h2>
+                <p>Join FitZone today and start your fitness journey with our state-of-the-art equipment and expert trainers.</p>
+                <a href="../front-end/sign_up.php" class="btn">Sign Up</a>
+                
+                <div class="search-container">
+                    <input type="text" id="classSearch" placeholder="Search for classes..." class="search-input">
+                    <button id="searchButton" class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                
+                <div id="searchResults" class="search-results"></div>
+            </div>
+
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon"></div>
+                    <img src="../img/A1.jpeg" alt="Strength Training" class="image-size">
+                    <h3>Strength Training</h3>
+                    <p>Build muscle, increase strength, and enhance your overall fitness with our comprehensive strength training programs.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon"></div>
+                    <img src="../img/C1.jpeg" alt="Cardio" class="image-size">
+                    <h3>Cardio Workouts</h3>
+                    <p>Boost your heart health and burn calories with our energizing cardio equipment and classes.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon"></div>
+                    <img src="../img/Y1.jpeg" alt="Yoga" class="image-size">
+                    <h3>Yoga Classes</h3>
+                    <p>Find balance in mind and body with our variety of yoga classes suitable for all experience levels.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon"></div>
+                    <img src="../img/H1.jpeg" alt="HIIT Circuit" class="image-size">
+                    <h3>HIIT Circuit</h3>
+                    <p>Maximize calorie burn with high-intensity interval training designed to push your limits and boost metabolism.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon"></div>
+                    <img src="../img/P1.jpeg" alt="Pilates Core Focus" class="image-size">
+                    <h3>Pilates Core Focus</h3>
+                    <p>Strengthen your core, improve flexibility, and enhance posture with our specialized Pilates classes.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="chatbot-container" class="chatbot-container">
+        <div class="chatbot-header">
+          <h3>FitZone Assistant</h3>
+          <button id="close-chatbot" class="close-btn"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="chatbot-messages" id="chatbot-messages">
+          <div class="bot-message">
+            <div class="message-content"> Welcome to FitZone! I can help you calculate your BMI. Would you like to try it?</div>
+          </div>
+        </div>
+        <div id="bmi-calculator" class="bmi-calculator" style="display: none;">
+          <h4>BMI Calculator</h4>
+          <div class="input-group">
+            <label for="weight">Weight</label>
+            <input type="number" id="weight" placeholder="Weight in kg">
+          </div>
+          <div class="input-group">
+            <label for="height">Height</label>
+            <input type="number" id="height" placeholder="Height in cm">
+          </div>
+          <button id="calculate-bmi" class="calculate-btn">Calculate BMI</button>
+          <div id="bmi-result" class="bmi-result"></div>
+        </div>
+        <div class="chatbot-input">
+          <input type="text" id="user-input" placeholder="Type your message...">
+          <button id="send-message"><i class="fas fa-paper-plane"></i></button>
+        </div>
+      </div>
+      
+      <div id="chatbot-toggle" class="chatbot-toggle">
+        <i class="fas fa-calculator"></i>
+      </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>FitZone</h4>
+                <p>Transform your body, transform your life with our state-of-the-art fitness center and expert trainers.</p>
+                <div class="social-links">
+                    <a href=" "><i class="fab fa-youtube"></i></a>
+                    <a href=" "><i class="fab fa-instagram"></i></a>
+                    <a href=" "><i class="fab fa-facebook-f"></i></a>
+                    <a href=" "><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="../front-end/Home.html">Home</a></li>
+                    <li><a href="../front-end/About Us.html">About Us</a></li>
+                    <li><a href="../front-end/Class.php">Classes</a></li>
+                    <li><a href="../front-end/Membership.html">Membership</a></li>
+                    <li><a href="../front-end/Contact Us.html">Contact Us</a></li>
+                    <a href="../front-end/l.php" class="nav-item btn">Sign In</a>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Our Hours</h4>
+                <ul>
+                    <li>Monday - Friday: 5:00 AM - 11:00 PM</li>
+                    <li>Saturday: 6:00 AM - 10:00 PM</li>
+                    <li>Sunday: 7:00 AM - 9:00 PM</li>
+                    <li>Holidays: 8:00 AM - 8:00 PM</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Info</h4>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Fitness Avenue, Healthville</li>
+                    <li><i class="fas fa-phone"></i> (555) 123-4567</li>
+                    <li><i class="fas fa-envelope"></i> info@fitzonefit.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 FitZone Fitness Center. All rights reserved.</p>
+        </div>
+    </footer>
+    
+  
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlElement = document.documentElement;
+        
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            htmlElement.setAttribute('data-theme', savedTheme);
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+        
+        const logoutBtn = document.getElementById('logoutBtn');
+        const logoutModal = document.getElementById('logoutModal');
+        const logoutYes = document.getElementById('logoutYes');
+        const logoutNo = document.getElementById('logoutNo');
+        
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            logoutModal.style.display = 'flex';
+        });
+        
+        logoutNo.addEventListener('click', () => {
+            logoutModal.style.display = 'none';
+        });
+        
+        logoutYes.addEventListener('click', () => {
+            alert("You have been successfully logged out !");
+            window.location.href = '../front-end/l.php';
+        });
+        
+        const classSearch = document.getElementById('classSearch');
+        const searchButton = document.getElementById('searchButton');
+        const searchResults = document.getElementById('searchResults');
+        
+        const classes = [
+            { name: 'Morning Yoga', description: 'Start your day with calm and focus', image: '../img/Y1.jpeg' },
+            { name: 'HIIT Circuit', description: 'High-intensity interval training', image: '../img/H1.jpeg' },
+            { name: 'Strength Training', description: 'Learn proper lifting techniques', image: '../img/A1.jpeg' },
+            { name: 'Cardio', description: '45-minute cardio workout', image: '../img/C1.jpeg' },
+            { name: 'Pilates Core', description: 'Core-focused pilates session', image: '../img/P1.jpeg' },
+            { name: 'Evening Meditation', description: 'Wind down with guided meditation', image: '../img/Y2.jpeg' }
+        ];
+        
+        function performSearch() {
+            const searchTerm = classSearch.value.toLowerCase();
+            
+            if (searchTerm.length < 2) {
+                searchResults.style.display = 'none';
+                return;
+            }
+            
+            const filteredClasses = classes.filter(cls => 
+                cls.name.toLowerCase().includes(searchTerm) || 
+                cls.description.toLowerCase().includes(searchTerm)
+            );
+            
+            if (filteredClasses.length > 0) {
+                searchResults.innerHTML = '';
+                
+                filteredClasses.forEach(cls => {
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'search-result-item';
+                    resultItem.innerHTML = `
+                        <img src="${cls.image}" alt="${cls.name}">
+                        <div class="search-result-info">
+                            <h4>${cls.name}</h4>
+                            <p>${cls.description}</p>
+                        </div>
+                    `;
+                    
+                    const classPageMap = {
+                        'Morning Yoga': '../front-end/Vinyasa Flow Yoga.php',
+                        'HIIT Circuit': '../front-end/HIIT Circuit.php',
+                        'Strength Training': '../front-end/Advanced Strength Training.php',
+                        'Cardio Workouts': '../front-end/Cardio Workouts.php',
+                        'Pilates Core': '../front-end/Pilates Core Focus.php',
+                        'Evening Meditation': '../front-end/Vinyasa Flow Yoga.php'
+                    };
+                    
+                    resultItem.addEventListener('click', () => {
+                        const classPage = classPageMap[cls.name] || 'Class.php';
+                        window.location.href = `${classPage}?class=${encodeURIComponent(cls.name)}`;
+                    });
+                    
+                    searchResults.appendChild(resultItem);
+                });
+                
+                searchResults.style.display = 'block';
+            } else {
+                searchResults.innerHTML = '<div class="search-result-item">No classes found matching your search.</div>';
+                searchResults.style.display = 'block';
+            }
+        }
+        
+        searchButton.addEventListener('click', performSearch);
+        
+        classSearch.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                performSearch();
+            } else if (e.key === 'Escape') {
+                searchResults.style.display = 'none';
+            } else if (classSearch.value.length >= 2) {
+                performSearch();
+            } else {
+                searchResults.style.display = 'none';
+            }
+        });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const chatbotToggle = document.getElementById('chatbot-toggle');
+    const chatbotContainer = document.getElementById('chatbot-container');
+    const closeBtn = document.getElementById('close-chatbot');
+    const userInput = document.getElementById('user-input');
+    const sendBtn = document.getElementById('send-message');
+    const chatMessages = document.getElementById('chatbot-messages');
+    const bmiCalculator = document.getElementById('bmi-calculator');
+    const calculateBtn = document.getElementById('calculate-bmi');
+    const weightInput = document.getElementById('weight');
+    const heightInput = document.getElementById('height');
+    const bmiResult = document.getElementById('bmi-result');
+
+    chatbotToggle.addEventListener('click', function() {
+      chatbotContainer.style.display = 'flex';
+    });
+
+    closeBtn.addEventListener('click', function() {
+      chatbotContainer.style.display = 'none';
+    });
+
+    function sendMessage() {
+      const message = userInput.value.trim();
+      if (message !== '') {
+        addMessage(message, 'user');
+        processMessage(message);
+        userInput.value = '';
+      }
+    }
+
+    sendBtn.addEventListener('click', sendMessage);
+
+    userInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
+
+    function addMessage(message, sender) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = sender === 'user' ? 'user-message' : 'bot-message';
+      
+      const messageContent = document.createElement('div');
+      messageContent.className = 'message-content';
+      messageContent.textContent = message;
+      
+      messageDiv.appendChild(messageContent);
+      chatMessages.appendChild(messageDiv);
+      
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function processMessage(message) {
+      const lowerMessage = message.toLowerCase();
+      
+      setTimeout(() => {
+        if (lowerMessage.includes('bmi') || lowerMessage.includes('calculator') || lowerMessage.includes('calculate') || lowerMessage.includes('yes')) {
+          addMessage("Great! I'll help you calculate your BMI. Please enter your weight in kg and height in cm.", 'bot');
+          bmiCalculator.style.display = 'block';
+        } else if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
+          addMessage("Hi there! I can help you calculate your BMI. Just type 'BMI' to get started.", 'bot');
+        } else if (lowerMessage.includes('thank') || lowerMessage.includes('thanks')) {
+          addMessage("You're welcome! Is there anything else I can help you with?", 'bot');
+        } else if (lowerMessage.includes('no') || lowerMessage.includes('bye') || lowerMessage.includes('goodbye')) {
+          addMessage("Okay! Feel free to come back anytime you need fitness assistance. Have a great day!", 'bot');
+        } else {
+          addMessage("I'm here to help with BMI calculations. Would you like to calculate your BMI?", 'bot');
+        }
+      }, 500);
+    }
+
+    calculateBtn.addEventListener('click', function() {
+      const weight = parseFloat(weightInput.value);
+      const height = parseFloat(heightInput.value) / 100;
+
+      if (isNaN(weight) || isNaN(height) || weight <= 0 || height <= 0) {
+        bmiResult.textContent = "Please enter valid weight and height values.";
+        bmiResult.className = "bmi-result";
+        return;
+      }
+      
+      const bmi = weight / (height * height);
+      const roundedBmi = bmi.toFixed(1);
+      
+      let category, resultClass;
+      
+      if (bmi < 18.5) {
+        category = "Underweight";
+        resultClass = "underweight";
+      } else if (bmi < 25) {
+        category = "Normal weight";
+        resultClass = "normal";
+      } else if (bmi < 30) {
+        category = "Overweight";
+        resultClass = "overweight";
+      } else {
+        category = "Obese";
+        resultClass = "obese";
+      }
+      
+      bmiResult.innerHTML = `Your BMI is <strong>${roundedBmi}</strong><br>Category: <strong>${category}</strong>`;
+      bmiResult.className = `bmi-result ${resultClass}`;
+      
+      addMessage(`Your BMI calculation is complete. Your BMI is ${roundedBmi} (${category}).`, 'bot');
+      
+      setTimeout(() => {
+        bmiCalculator.style.display = 'none';
+        
+        if (category === "Underweight") {
+          addMessage("Being underweight may indicate nutritional deficiencies. Consider consulting with a nutritionist for a healthy weight gain plan.", 'bot');
+        } else if (category === "Normal weight") {
+          addMessage("Great job maintaining a healthy weight! Keep up your balanced diet and regular exercise routine.", 'bot');
+        } else if (category === "Overweight") {
+          addMessage("Consider speaking with a fitness trainer about a personalized exercise plan and dietary adjustments to reach a healthier weight.", 'bot');
+        } else {
+          addMessage("It's recommended to consult with healthcare professionals for guidance on achieving a healthier weight through sustainable lifestyle changes.", 'bot');
+        }
+        
+        setTimeout(() => {
+          addMessage("Would you like to calculate your BMI again or learn about our fitness programs?", 'bot');
+        }, 1000);
+      }, 2000);
+      
+      weightInput.value = '';
+      heightInput.value = '';
+    });
+  });
+        
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.search-container') && !e.target.closest('.search-results')) {
+                searchResults.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
