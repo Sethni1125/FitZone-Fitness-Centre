@@ -1,0 +1,265 @@
+        .members-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .members-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .members-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+
+        .search-filter-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 15px;
+            background-color: #222;
+            border-bottom: 1px solid #333;
+        }
+
+        .search-container {
+            position: relative;
+            flex-grow: 0;
+            width: 220px; 
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 10px 8px 35px;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            background-color: #333;
+            color: #eee;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+        .filter-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .filter-select {
+            padding: 8px 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #333;
+            color: #eee;
+            font-size: 0.9rem;
+        }
+
+        .search-input:focus, .filter-select:focus {
+            outline: none;
+            box-shadow: 0 0 0 1px #555;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+
+        .members-table-container {
+            overflow-x: auto;
+        }
+
+        .members-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .members-table th {
+            background-color: #f5f7fa;
+            color: #555;
+            font-weight: 600;
+            text-align: left;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .members-table td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eaeaea;
+            vertical-align: middle;
+        }
+
+        .members-table tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .members-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .member-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+
+        .member-name-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .member-name {
+            font-weight: 500;
+        }
+
+        .member-email {
+            color: #777;
+            font-size: 0.85rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .status-active {
+            background-color: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+        }
+
+        .status-inactive {
+            background-color: rgba(231, 76, 60, 0.15);
+            color: #e74c3c;
+        }
+
+        .status-pending {
+            background-color: rgba(243, 156, 18, 0.15);
+            color: #f39c12;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 5px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .action-btn:hover {
+            background-color: #f0f0f0;
+        }
+
+        .edit-btn {
+            color: #3498db;
+        }
+
+        .delete-btn {
+            color: #e74c3c;
+        }
+
+        .view-btn {
+            color: #2ecc71;
+        }
+
+        .membership-premium {
+            color: #9b59b6;
+            font-weight: 500;
+        }
+
+        .membership-standard {
+            color: #3498db;
+            font-weight: 500;
+        }
+
+        .membership-basic {
+            color: #2ecc71;
+            font-weight: 500;
+        }
+
+
+        [data-theme="dark"] {
+            --text-color: #f0f0f0;
+            --background-color: #1a1a1a;
+            --card-background: #2d2d2d;
+            --border-color: #444;
+            --hover-color: #333;
+        }
+
+        [data-theme="dark"] .members-container {
+            background-color: var(--card-background);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        [data-theme="dark"] .members-header,
+        [data-theme="dark"] .search-filter-container {
+            border-color: var(--border-color);
+        }
+
+        [data-theme="dark"] .members-title,
+        [data-theme="dark"] .member-name {
+            color: var(--text-color);
+        }
+
+        [data-theme="dark"] .search-filter-container {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] .search-input,
+        [data-theme="dark"] .filter-select {
+            background-color: var(--background-color);
+            border-color: var(--border-color);
+            color: var(--text-color);
+        }
+
+        [data-theme="dark"] .members-table th {
+            background-color: #222;
+            color: #ccc;
+            border-color: var(--border-color);
+        }
+
+        [data-theme="dark"] .members-table td {
+            border-color: var(--border-color);
+            color: var(--text-color);
+        }
+
+        [data-theme="dark"] .members-table tr:hover {
+            background-color: var(--hover-color);
+        }
+
+        [data-theme="dark"] .member-email {
+            color: #bbb;
+        }
+
+        [data-theme="dark"] .action-btn:hover {
+            background-color: var(--hover-color);
+        }
